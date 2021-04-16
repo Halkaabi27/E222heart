@@ -1,0 +1,57 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: heartinfo
+  description: Service to predict heart failure from our module and other stuff
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    name: Hamad Alkaabi
+  license:
+    name: Apache
+paths:
+  /prediction/{id}:
+    get:
+      tags:
+        - predict
+      operationId: prediction.my_prediction
+      description: Return data from model based on inputs
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: array
+            items:
+              type: number
+            minItems: 1
+          style: simple
+          explode: true
+        - in: query
+          name: metadata
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: 'prediction'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CPU'
+servers:
+  - url: 'http://localhost:8080/API-Project'
+components:
+  schemas:
+    CPU:
+      type: object
+      required:
+        - model
+      properties:
+        model:
+          type: string
+    OS:
+      type: object
+      required:
+        - model
+      properties:
+        model:
+          type: string
